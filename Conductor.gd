@@ -18,6 +18,21 @@ var offset:float = 0;
 
 var safeFrames:int = 10;
 
+var paused:bool = false;
+
+func _process(elapsed:float) -> void:
+	if not paused:
+		songPosition += elapsed;
+
+func pause() -> void:
+	paused = true;
+
+func play() -> void:
+	paused = false;
+
+func reset() -> void:
+	songPosition = 0;
+	
 """
 extends Node
 
