@@ -69,13 +69,13 @@ func updateBeat() -> void:
 func stepHit():
 	if curStep % 4 == 0:
 		beatHit();
-	print("step hit fired!");
+#	print("step hit fired!");
 
 func beatHit():
 	if curBeat % 4 == 0:
 		measureHit();
-	print("beat hit fired!");
+#	print("beat hit fired!");
 
 func measureHit():
-	print("measure hit fired!");
+#	print("measure hit fired!");
 	pass
