@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="fnf-wizard-engine"
+run/main_scene="res://TitleState.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Conductor="*res://Conductor.gd"
 
 [rendering]
 
