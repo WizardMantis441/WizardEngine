@@ -11,6 +11,10 @@ var curStep:int = 0;
 var curBeat:int = 0;
 var curMeasure:int = 0;
 
+signal stepHit(curStep:int);
+signal beatHit(curBeat:int);
+signal measureHit(curMeasure:int);
+
 func _process(elapsed:float) -> void:
 	if not paused:
 		songPosition += elapsed * 1000;
@@ -29,30 +33,18 @@ func _process(elapsed:float) -> void:
 		
 	curStep = lastChange["stepTime"] + floor((songPosition - lastChange["songTime"]) / stepCrochet);
 	curBeat = floor(curStep / 4);
+	curMeasure = floor(curBeat / 4);
 	
 	if oldStep != curStep:
-		stepHit();
+		stepHit.emit(curStep);
+		if curStep % 4 == 0:
+			beatHit.emit(curBeat);
+		if curBeat % 4 == 0:
+			measureHit.emit(curMeasure);
+		# print("curStep ", curStep, ", curBeat ", curBeat, ", curMeasure ", curMeasure);
 
 var paused:bool = false;
 
-func play() -> void:
-	paused = false;
-
-func pause() -> void:
-	paused = true;
-
-func reset() -> void:
-	songPosition = 0;
-
-func stepHit():
-	if curStep % 4 == 0:
-		beatHit();
-	print("curStep ", curStep, ", curBeat ", curBeat, ", curMeasure ", curMeasure);
-
-func beatHit():
-	if curBeat % 4 == 0:
-		measureHit();
-
-func measureHit():
-	# do literally nothing dumbass
-	pass
+func play() -> void: paused = false;
+func pause() -> void: paused = true;
+func reset() -> void: songPosition = 0;
