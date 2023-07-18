@@ -1,14 +1,5 @@
 extends Node
 
-"""
-typedef BPMChangeEvent =
-{
-	var stepTime:Int;
-	var songTime:Float;
-	var bpm:Float;
-}
-"""
-
 var bpm:float = 100;
 var crochet:float = ((60 / bpm) * 1000); # beats in ms
 var stepCrochet:float = crochet / 4; # steps in ms
@@ -69,13 +60,12 @@ func updateBeat() -> void:
 func stepHit():
 	if curStep % 4 == 0:
 		beatHit();
-#	print("step hit fired!");
+	print("curStep ", curStep, ", curBeat ", curBeat, ", curMeasure ", curMeasure);
 
 func beatHit():
 	if curBeat % 4 == 0:
 		measureHit();
-#	print("beat hit fired!");
 
 func measureHit():
-#	print("measure hit fired!");
+	# do literally nothing dumbass
 	pass
