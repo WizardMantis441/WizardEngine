@@ -15,7 +15,6 @@ func _process(delta):
 	pass
 
 func beatHit():
-	print('test');
 	match Conductor.curBeat:
 		1: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er');
 		3: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er\\npresent');
