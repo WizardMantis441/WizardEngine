@@ -1,3 +1,56 @@
-[gd_scene format=3 uid="uid://k6ql3mo54pa3"]
+[gd_scene load_steps=4 format=3 uid="uid://k6ql3mo54pa3"]
+
+[ext_resource type="Texture2D" uid="uid://dsv326snnq2be" path="res://assets/images/logo.png" id="1_e6b47"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gfDanceTitle.res" id="2_nipbh"]
+
+[sub_resource type="GDScript" id="GDScript_evgun"]
+script/source = "extends Node2D
+
+var curWacky = ['test lol 1', 'test lol 2'];
+
+func _ready():
+	pass
+
+func _process(delta):
+	pass
+
+func beatHit():
+	print('test');
+	match Conductor.curBeat:
+		1: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er');
+		3: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er\\npresent');
+		4: pass # wipe
+		5: print('in association\\nwith');
+		7: print('in association\\nwith\\nnewgrounds');
+			# ng.visible = true;
+		8: pass # wipe
+			# ng.visible = false;
+		9: print(curWacky[0]);
+		11: print(curWacky[0], '\\n', curWacky[1]);
+		12: pass # wipe
+		13: print('friday');
+		14: print('friday\\nnight');
+		15: print('friday\\nnight\\nfunkin');
+		16: skipIntro();
+	pass
+
+func skipIntro():
+	pass # will do later
+"
 
 [node name="TitleState" type="Node2D"]
+script = SubResource("GDScript_evgun")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(388.25, 234.75)
+scale = Vector2(0.9, 0.859629)
+texture = ExtResource("1_e6b47")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_nipbh")
+animation = &"gfDance"
