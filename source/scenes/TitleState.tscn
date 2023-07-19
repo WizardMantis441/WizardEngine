@@ -1,56 +1,98 @@
-[gd_scene load_steps=4 format=3 uid="uid://k6ql3mo54pa3"]
+[gd_scene load_steps=7 format=3 uid="uid://k6ql3mo54pa3"]
 
-[ext_resource type="Texture2D" uid="uid://dsv326snnq2be" path="res://assets/images/logo.png" id="1_e6b47"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gfDanceTitle.res" id="2_nipbh"]
+[ext_resource type="SpriteFrames" uid="uid://dp628vvl6vxu7" path="res://assets/images/gf.res" id="1_wqt1m"]
+[ext_resource type="Texture2D" uid="uid://dexp0syldhnq0" path="res://assets/images/newgrounds_logo.png" id="2_lir50"]
+[ext_resource type="SpriteFrames" path="res://assets/images/logo.res" id="2_vl8mn"]
+[ext_resource type="SpriteFrames" uid="uid://dp4o11dxcuk8t" path="res://assets/images/titleEnter.res" id="4_i3c3f"]
+[ext_resource type="AudioStream" uid="uid://dii6iugrc0eyx" path="res://assets/audio/music/freakyMenu.ogg" id="5_bin4j"]
 
 [sub_resource type="GDScript" id="GDScript_evgun"]
 script/source = "extends Node2D
 
-var curWacky = ['test lol 1', 'test lol 2'];
+@onready var gf = $gf
+@onready var logo = $\"logo\"
+@onready var ng = $\"ng\"
+@onready var enter = $\"press enter\"
+@onready var flash = $FLASHHH
+@onready var mainText = $Label
+
+var introText = FileAccess.get_file_as_string(\"res://assets/data/introText.txt\").split(\"\\n\");
+var curWacky = introText[randi_range(0, introText.size() - 1)].split(\"--\");
 
 func _ready():
-	Conductor.beatHit.connect(beatHit);
-	pass
-
-func _process(delta):
-	pass
+	RenderingServer.set_default_clear_color(Color.BLACK);
+	ng.visible = false;
 
 func beatHit(curBeat):
-	match Conductor.curBeat:
-		1: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er');
-		3: print('ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er\\npresent');
-		4: pass # wipe
-		5: print('in association\\nwith');
-		7: print('in association\\nwith\\nnewgrounds');
-			# ng.visible = true;
-		8: pass # wipe
-			# ng.visible = false;
-		9: print(curWacky[0]);
-		11: print(curWacky[0], '\\n', curWacky[1]);
-		12: pass # wipe
-		13: print('friday');
-		14: print('friday\\nnight');
-		15: print('friday\\nnight\\nfunkin');
+	logo.frame = 0;
+	logo.play(\"logo bumpin\");
+	
+	match curBeat:
+		1: mainText.text = 'ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er';
+		3: mainText.text = 'ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er\\npresents';
+		4: mainText.text = '';
+		5: mainText.text = 'in association\\nwith';
+		7:
+			mainText.text = 'in association\\nwith\\nnewgrounds';
+			ng.visible = true;
+		8: ng.visible = false;
+		9: mainText.text = curWacky[0];
+		11: mainText.text = curWacky[0] + '\\n' + curWacky[1];
+		12: mainText.text = '';
+		13: mainText.text = 'friday';
+		14: mainText.text = 'friday\\nnight';
+		15: mainText.text = 'friday\\nnight\\nfunkin';
 		16: skipIntro();
 	pass
 
 func skipIntro():
-	pass # will do later
+	flash.color = Color.WHITE;
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(flash, \"modulate:a\", 0, 4)
+	
+	mainText.visible = false;
 "
 
 [node name="TitleState" type="Node2D"]
 script = SubResource("GDScript_evgun")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="gf" type="AnimatedSprite2D" parent="."]
+position = Vector2(1212, 49.0001)
+scale = Vector2(0.115465, 0.103475)
+sprite_frames = ExtResource("1_wqt1m")
+animation = &"body deoderant"
+frame = 29
+frame_progress = 1.0
+
+[node name="logo" type="AnimatedSprite2D" parent="."]
+position = Vector2(378, 266)
+sprite_frames = ExtResource("2_vl8mn")
+animation = &"logo bumpin"
+
+[node name="press enter" type="AnimatedSprite2D" parent="."]
+position = Vector2(815, 554)
+sprite_frames = ExtResource("4_i3c3f")
+animation = &"ENTER PRESSED"
+
+[node name="FLASHHH" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
 
-[node name="Logo" type="Sprite2D" parent="."]
-position = Vector2(388.25, 234.75)
-scale = Vector2(0.9, 0.859629)
-texture = ExtResource("1_e6b47")
+[node name="ng" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("2_lir50")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_nipbh")
-animation = &"gfDance"
+[node name="Label" type="Label" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_font_sizes/font_size = 100
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_bin4j")
+volume_db = -8.0
+autoplay = true

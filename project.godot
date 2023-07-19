@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="fnf-wizard-engine"
+config/name="Friday Night Funkin': Wizard Engine (please dont take this seriously i dont know what i am doing thank you in advance)"
 run/main_scene="res://source/scenes/TitleState.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 Conductor="*res://source/scripts/Conductor.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [input]
 
