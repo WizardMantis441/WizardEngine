@@ -1,0 +1,4 @@
+- get all assets in
+- figure out the method i wanna store all of them
+- polish titlestate a bit
+- everything else
