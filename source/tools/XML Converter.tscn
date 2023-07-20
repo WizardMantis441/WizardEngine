@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxf7y7sr7css4"]
 
-[ext_resource type="Script" path="res://source/scripts/tools/XML Converter.gd" id="1_ri1eg"]
-[ext_resource type="Script" path="res://source/scripts/tools/Choose Sprites.gd" id="2_i47a8"]
+[ext_resource type="Script" path="res://source/tools/XML Converter.gd" id="1_ri1eg"]
+[ext_resource type="Script" path="res://source/tools/Choose Sprites.gd" id="2_i47a8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chckx"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 1)

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfghwn7f5veay"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/game/NOTE_assets.res" id="1_61jp4"]
+
+[node name="Strum" type="Node2D"]
+
+[node name="left" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_61jp4")
+animation = &"arrow static instance 1"
+
+[node name="down" type="AnimatedSprite2D" parent="."]
+position = Vector2(112, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_61jp4")
+animation = &"arrow static instance 2"
+
+[node name="up" type="AnimatedSprite2D" parent="."]
+position = Vector2(224, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_61jp4")
+animation = &"arrow static instance 4"
+
+[node name="right" type="AnimatedSprite2D" parent="."]
+position = Vector2(336, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_61jp4")
+animation = &"arrow static instance 3"

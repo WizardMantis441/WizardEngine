@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bnv0bf12uucsb"]
 
-[ext_resource type="SpriteFrames" uid="uid://dp628vvl6vxu7" path="res://assets/images/menus/titlestate/gf.res" id="1_itr1o"]
-[ext_resource type="SpriteFrames" path="res://assets/images/menus/titlestate/logo.res" id="2_wuw8i"]
-[ext_resource type="SpriteFrames" uid="uid://dp4o11dxcuk8t" path="res://assets/images/menus/titlestate/titleEnter.res" id="3_odeyu"]
-[ext_resource type="Texture2D" uid="uid://dexp0syldhnq0" path="res://assets/images/menus/titlestate/newgrounds_logo.png" id="4_27eo1"]
-[ext_resource type="AudioStream" uid="uid://dii6iugrc0eyx" path="res://assets/audio/music/freakyMenu.ogg" id="5_bin4j"]
-[ext_resource type="AudioStream" uid="uid://bc0p0nhwb0vl4" path="res://assets/audio/sfx/confirm.ogg" id="6_ymwv4"]
+[ext_resource type="SpriteFrames" uid="uid://dp628vvl6vxu7" path="res://assets/images/menus/titlestate/gf.res" id="1_5vwk1"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/titlestate/logo.res" id="2_2k4vq"]
+[ext_resource type="SpriteFrames" uid="uid://dp4o11dxcuk8t" path="res://assets/images/menus/titlestate/titleEnter.res" id="3_v2vtu"]
+[ext_resource type="Texture2D" uid="uid://dexp0syldhnq0" path="res://assets/images/menus/titlestate/newgrounds_logo.png" id="4_ld6ng"]
+[ext_resource type="AudioStream" uid="uid://dii6iugrc0eyx" path="res://assets/audio/music/freakyMenu.ogg" id="5_wyxq3"]
+[ext_resource type="AudioStream" uid="uid://bc0p0nhwb0vl4" path="res://assets/audio/sfx/confirm.ogg" id="6_8j3ax"]
 
 [sub_resource type="GDScript" id="GDScript_evgun"]
 script/source = "extends Node2D
@@ -19,7 +19,7 @@ script/source = "extends Node2D
 @onready var confirm = $confirm
 
 var introText = FileAccess.get_file_as_string(\"res://assets/data/introText.txt\").split(\"\\n\");
-var curWacky = introText[randi_range(0, introText.size() - 1)].split(\"--\");
+var curWacky = introText[randi_range(0, introText.size() - 2)].split(\"--\");
 
 var skippedIntro = false;
 var pressedEnter = false;
@@ -34,7 +34,8 @@ func _process(elapsed:float) -> void:
 			if not pressedEnter:
 				pressedEnter = true;
 				enter.play(\"ENTER PRESSED\");
-				flashScreen(1);
+				var tween = get_tree().create_tween();
+				tween.tween_property(flash, \"modulate:a\", 0, 1);
 				confirm.play();
 	#			FlxG.switchState(new MainMenuState());
 		else:
@@ -67,14 +68,11 @@ func beatHit(curBeat):
 	pass
 
 func skipIntro():
-	flashScreen(4);
-	mainText.visible = false;
-	skippedIntro = true;
-
-func flashScreen(time:float):
 	flash.color = Color.WHITE;
 	var tween = get_tree().create_tween();
-	tween.tween_property(flash, \"modulate:a\", 0, time);
+	tween.tween_property(flash, \"modulate:a\", 0, 4);
+	mainText.visible = false;
+	skippedIntro = true;
 "
 
 [node name="TitleState" type="Node2D"]
@@ -82,19 +80,19 @@ script = SubResource("GDScript_evgun")
 
 [node name="gf" type="AnimatedSprite2D" parent="."]
 position = Vector2(903, 376)
-sprite_frames = ExtResource("1_itr1o")
+sprite_frames = ExtResource("1_5vwk1")
 animation = &"danceRight"
 frame = 14
 frame_progress = 1.0
 
 [node name="logo" type="AnimatedSprite2D" parent="."]
 position = Vector2(350, 250)
-sprite_frames = ExtResource("2_wuw8i")
+sprite_frames = ExtResource("2_2k4vq")
 animation = &"logo bumpin"
 
 [node name="press enter" type="AnimatedSprite2D" parent="."]
 position = Vector2(880, 621)
-sprite_frames = ExtResource("3_odeyu")
+sprite_frames = ExtResource("3_v2vtu")
 animation = &"Press Enter to Begin"
 autoplay = "Press Enter to Begin"
 
@@ -114,12 +112,12 @@ uppercase = true
 [node name="ng" type="Sprite2D" parent="."]
 position = Vector2(640, 500)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_27eo1")
+texture = ExtResource("4_ld6ng")
 
 [node name="music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_bin4j")
+stream = ExtResource("5_wyxq3")
 volume_db = -8.0
 autoplay = true
 
 [node name="confirm" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_ymwv4")
+stream = ExtResource("6_8j3ax")
