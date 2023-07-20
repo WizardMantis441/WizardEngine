@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dioxu3hkpb8ki"]
+
+[ext_resource type="SpriteFrames" uid="uid://ce6qw8iqe8j62" path="res://assets/images/characters/bf.res" id="1_0s5ds"]
+[ext_resource type="Script" path="res://source/game/Character.gd" id="2_134l2"]
+
+[node name="Character" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_0s5ds")
+animation = &"idle"
+script = ExtResource("2_134l2")
