@@ -1,6 +1,13 @@
 extends Node
 
-var bpm:float = 100;
+var bpm:float = 100:
+	get:
+		return bpm
+	set(value):
+		onBPMChange.emit(value)
+		bpm = value
+		crochet = ((60 / bpm) * 1000)
+		stepCrochet = crochet / 4
 var crochet:float = ((60 / bpm) * 1000); # beats in ms
 var stepCrochet:float = crochet / 4; # steps in ms
 var songPosition:float;
@@ -14,6 +21,7 @@ var curMeasure:int = 0;
 signal stepHit(curStep:int);
 signal beatHit(curBeat:int);
 signal measureHit(curMeasure:int);
+signal onBPMChange(newBPM:float);
 
 func _process(elapsed:float) -> void:
 	if not paused:

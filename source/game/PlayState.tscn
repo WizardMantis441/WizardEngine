@@ -1,13 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl6k4l1sowpgg"]
+[gd_scene load_steps=6 format=3 uid="uid://dl6k4l1sowpgg"]
 
 [ext_resource type="Script" path="res://source/game/PlayState.gd" id="1_714lj"]
-[ext_resource type="PackedScene" uid="uid://c5en53qsfjkve" path="res://source/game/HUD.tscn" id="1_guupv"]
 [ext_resource type="PackedScene" uid="uid://dioxu3hkpb8ki" path="res://source/game/Character.tscn" id="2_611e2"]
+[ext_resource type="SpriteFrames" uid="uid://cb8bkgn26d5fs" path="res://assets/images/characters/dad.res" id="3_mfou7"]
+[ext_resource type="PackedScene" uid="uid://cfghwn7f5veay" path="res://source/game/Strumline.tscn" id="3_qwvqn"]
+[ext_resource type="AudioStream" uid="uid://bvwivsh2rcwsm" path="res://assets/songs/test/song/Inst.ogg" id="4_huw5l"]
 
-[node name="PlayState" type="Node2D"]
+[node name="PlayState" type="Node2D" node_paths=PackedStringArray("strumLines")]
 script = ExtResource("1_714lj")
+strumLines = [NodePath("camHUD/Player Strums"), NodePath("camHUD/Opponent Strums")]
 
-[node name="Boyfriend" parent="." instance=ExtResource("2_611e2")]
+[node name="camGame" type="Node2D" parent="."]
+z_index = 1
+z_as_relative = false
+
+[node name="Boyfriend" parent="camGame" instance=ExtResource("2_611e2")]
 position = Vector2(931, 415)
 
-[node name="HUD" parent="." instance=ExtResource("1_guupv")]
+[node name="Dad" parent="camGame" instance=ExtResource("2_611e2")]
+position = Vector2(343, 226)
+sprite_frames = ExtResource("3_mfou7")
+curCharacter = "dad"
+
+[node name="camHUD" type="Node2D" parent="."]
+z_index = 1
+z_as_relative = false
+
+[node name="Player Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
+position = Vector2(775, 125)
+characters = [NodePath("../../camGame/Boyfriend")]
+
+[node name="Opponent Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
+position = Vector2(175, 125)
+cpu = true
+characters = [NodePath("../../camGame/Dad")]
+
+[node name="Inst" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_huw5l")

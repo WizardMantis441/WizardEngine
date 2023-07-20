@@ -1,0 +1,46 @@
+{
+	"info": {
+		"flipX": false,
+		"x": 0,
+		"y": 0,
+		"holdTime": 4
+	},
+
+	"anims": [
+		{
+			"name": "idle",
+			"x": 0,
+			"y": 0,
+			"loop": false,
+			"indices": []
+		},
+		{
+			"name": "singLEFT",
+			"x": -20,
+			"y": 3,
+			"loop": false,
+			"indices": []
+		},
+		{
+			"name": "singDOWN",
+			"x": 0,
+			"y": 25,
+			"loop": false,
+			"indices": []
+		},
+		{
+			"name": "singUP",
+			"x": 14.5,
+			"y": -13.5,
+			"loop": false,
+			"indices": []
+		},
+		{
+			"name": "singRIGHT",
+			"x": 45,
+			"y": 3.5,
+			"loop": false,
+			"indices": []
+		}
+	]
+}

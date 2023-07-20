@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Conductor="*res://source/backend/Conductor.gd"
-Strumline="*res://source/game/Strumline.tscn"
 
 [display]
 
