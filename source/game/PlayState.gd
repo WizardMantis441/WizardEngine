@@ -7,3 +7,6 @@ func _ready():
 
 func beatHit(_curBeat):
 	boyfriend.dance()
+
+func stepHit(curStep):
+	boyfriend.timer += 1;
