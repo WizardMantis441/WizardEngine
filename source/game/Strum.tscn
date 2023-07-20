@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3s2duytafk2a"]
+
+[ext_resource type="SpriteFrames" uid="uid://drcrw8nrplmfd" path="res://assets/images/game/NOTE_assets.res" id="1_tj50u"]
+[ext_resource type="Script" path="res://source/game/Strum.gd" id="2_kko4j"]
+
+[node name="Strum" type="AnimatedSprite2D"]
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_tj50u")
+animation = &"arrow static instance 0"
+script = ExtResource("2_kko4j")
