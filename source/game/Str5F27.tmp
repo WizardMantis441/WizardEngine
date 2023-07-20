@@ -5,8 +5,6 @@
 [sub_resource type="GDScript" id="GDScript_5lbno"]
 script/source = "extends Node2D
 
-var cpu:bool = false;
-
 @onready var left = $left
 @onready var down = $down
 @onready var up = $up
@@ -14,14 +12,13 @@ var cpu:bool = false;
 
 @onready var strums = [left, down, up, right];
 var types = [\"left\", \"down\", \"up\", \"right\"];
-var statics = [1, 2, 4, 3]
 
 func _process(delta):
 	for i in strums.size():
-		if Input.is_action_just_pressed(types[i]) and not cpu:
+		if Input.is_action_just_pressed(types[i]):
 			strums[i].play(types[i] + \" press instance 1\");
-		if Input.is_action_just_released(types[i]) and not cpu:
-			strums[i].play(\"arrow static instance \" + str(statics[i]));
+		if Input.is_action_just_released(types[i]):
+			strums[i].play(\"arrow static instance \" + str(i + 1));
 	pass
 "
 
@@ -31,7 +28,7 @@ script = SubResource("GDScript_5lbno")
 [node name="left" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_61jp4")
-animation = &"arrow static instance 3"
+animation = &"arrow static instance 2"
 
 [node name="down" type="AnimatedSprite2D" parent="."]
 position = Vector2(112, 0)

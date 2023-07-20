@@ -7,3 +7,4 @@ var gf:Character;
 var stage:Stage;
 
 # var notes:Dictionary = Notes or something idk
+
