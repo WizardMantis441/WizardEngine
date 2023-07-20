@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://sd3i55kwuctr"]
 
-[ext_resource type="SpriteFrames" path="res://assets/images/game/NOTE_assets.res" id="1_r56l3"]
+[ext_resource type="SpriteFrames" uid="uid://drcrw8nrplmfd" path="res://assets/images/game/NOTE_assets.res" id="1_r56l3"]
 
 [node name="Note" type="Node2D"]
 

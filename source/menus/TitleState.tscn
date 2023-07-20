@@ -1,83 +1,15 @@
 [gd_scene load_steps=8 format=3 uid="uid://bnv0bf12uucsb"]
 
 [ext_resource type="SpriteFrames" uid="uid://dp628vvl6vxu7" path="res://assets/images/menus/titlestate/gf.res" id="1_5vwk1"]
+[ext_resource type="Script" path="res://source/menus/TitleState.gd" id="1_6f65o"]
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/titlestate/logo.res" id="2_2k4vq"]
 [ext_resource type="SpriteFrames" uid="uid://dp4o11dxcuk8t" path="res://assets/images/menus/titlestate/titleEnter.res" id="3_v2vtu"]
 [ext_resource type="Texture2D" uid="uid://dexp0syldhnq0" path="res://assets/images/menus/titlestate/newgrounds_logo.png" id="4_ld6ng"]
 [ext_resource type="AudioStream" uid="uid://dii6iugrc0eyx" path="res://assets/audio/music/freakyMenu.ogg" id="5_wyxq3"]
 [ext_resource type="AudioStream" uid="uid://bc0p0nhwb0vl4" path="res://assets/audio/sfx/confirm.ogg" id="6_8j3ax"]
 
-[sub_resource type="GDScript" id="GDScript_evgun"]
-script/source = "extends Node2D
-
-@onready var gf = $gf
-@onready var logo = $\"logo\"
-@onready var ng = $\"ng\"
-@onready var enter = $\"press enter\"
-@onready var flash = $FLASHHH
-@onready var mainText = $Label
-@onready var confirm = $confirm
-
-var introText = FileAccess.get_file_as_string(\"res://assets/data/introText.txt\").split(\"\\n\");
-var curWacky = introText[randi_range(0, introText.size() - 2)].split(\"--\");
-
-var skippedIntro = false;
-var pressedEnter = false;
-
-func _ready():
-	RenderingServer.set_default_clear_color(Color.BLACK);
-	ng.visible = false;
-	
-func _process(_elapsed:float) -> void:
-	if Input.is_action_just_pressed(\"enter\"):
-		if skippedIntro:
-			if not pressedEnter:
-				pressedEnter = true;
-				enter.play(\"ENTER PRESSED\");
-				var tween = get_tree().create_tween();
-				tween.tween_property(flash, \"modulate:a\", 0, 1);
-				confirm.play();
-	#			FlxG.switchState(new MainMenuState());
-		else:
-			skipIntro();
-
-func beatHit(curBeat):
-	logo.frame = 0;
-	logo.play(\"logo bumpin\");
-	
-	gf.play(\"danceLeft\" if curBeat % 2 == 0 else \"danceRight\");
-	
-	if skippedIntro == false:
-		match curBeat:
-			1: mainText.text = 'ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er';
-			3: mainText.text = 'ninjamuffin99\\nphantomArcade\\nkawaisprite\\nevilsk8er\\npresent';
-			4: mainText.text = '';
-			5: mainText.text = 'in association\\nwith';
-			7:
-				mainText.text = 'in association\\nwith\\nnewgrounds';
-				ng.visible = true;
-			8:
-				mainText.text = '';
-				ng.visible = false;
-			9: mainText.text = curWacky[0];
-			11: mainText.text = curWacky[0] + '\\n' + curWacky[1];
-			12: mainText.text = '';
-			13: mainText.text = 'friday';
-			14: mainText.text = 'friday\\nnight';
-			15: mainText.text = 'friday\\nnight\\nfunkin';
-			16: skipIntro();
-		pass
-
-func skipIntro():
-	flash.color = Color.WHITE;
-	var tween = get_tree().create_tween();
-	tween.tween_property(flash, \"modulate:a\", 0, 4);
-	mainText.visible = false;
-	skippedIntro = true;
-"
-
 [node name="TitleState" type="Node2D"]
-script = SubResource("GDScript_evgun")
+script = ExtResource("1_6f65o")
 
 [node name="gf" type="AnimatedSprite2D" parent="."]
 position = Vector2(903, 376)
