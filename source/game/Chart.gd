@@ -1,10 +1,5 @@
 class_name Chart extends Node
 
-var bf:Character;
-var dad:Character;
-var gf:Character;
-
-var stage:Stage;
-
-# var notes:Dictionary = Notes or something idk
-
+static func parse(song:String, difficulty:String):
+	var c:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/" + song + "/charts/" + difficulty + ".json", FileAccess.READ).get_as_text())
+	return c
