@@ -28,6 +28,7 @@ func _ready():
 			note.noteData = n.id
 			note.time = n.time
 			notes.add_child(note)
+			print(note.strumLine)
 			
 			
 

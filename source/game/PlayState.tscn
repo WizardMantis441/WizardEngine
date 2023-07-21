@@ -38,3 +38,5 @@ characters = [NodePath("../../camGame/Dad")]
 
 [node name="Inst" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_huw5l")
+volume_db = -8.0
+autoplay = true
