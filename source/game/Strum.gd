@@ -19,8 +19,16 @@ func _process(_delta):
 		self.play("arrow static instance " + str(noteData))
 
 func updateNote(note):
-	note.canBeHit = (note.time > Conductor.songPosition - (Conductor.hitWindow * Conductor.latePressWindow) and note.time < Conductor.songPosition + (Conductor.hitWindow * Conductor.earlyPressWindow))
+#	note.canBeHit = (note.time > Conductor.songPosition - (Conductor.hitWindow * Conductor.latePressWindow) and note.time < Conductor.songPosition + (Conductor.hitWindow * Conductor.earlyPressWindow))
 	note.tooLate = (note.time < Conductor.songPosition - Conductor.hitWindow) and not note.wasGoodHit
-	
-	if Input.is_action_just_pressed(types[noteData]) and not cpu and note.canBeHit and notes.find(note) == 0 and not note.tooLate:
+#
+#	if Input.is_action_just_pressed(types[noteData]) and not cpu and note.canBeHit and notes.find(note) == 0 and not note.tooLate:
+#		get_tree().current_scene.goodNoteHit(note)
+
+	if abs(Conductor.songPosition - note.time) < Conductor.hitWindow * 0.35 and Input.is_action_just_pressed(note.dirs[note.noteData]) and note.strumLine.notes.find(note) == 0:
 		get_tree().current_scene.goodNoteHit(note)
+	
+	if note.tooLate:
+		note.queue_free()
+		note.strumLine.notes.erase(note)
+		get_tree().current_scene.remove_child(note)

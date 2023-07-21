@@ -54,6 +54,7 @@ func goodNoteHit(note):
 	strum.play(note.dirs[note.noteData] + " confirm instance 1")
 	note.queue_free()
 	note.strumLine.notes.erase(note)
+	remove_child(note)
 	note.wasGoodHit = true
 	
 	for character in note.strumLine.characters:
