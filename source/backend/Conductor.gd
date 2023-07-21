@@ -18,6 +18,11 @@ var curStep:int = 0;
 var curBeat:int = 0;
 var curMeasure:int = 0;
 
+# input stuff
+var hitWindow:float = 250
+var latePressWindow:float = 1
+var earlyPressWindow:float = 0.5
+
 signal stepHit(curStep:int);
 signal beatHit(curBeat:int);
 signal measureHit(curMeasure:int);

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl6k4l1sowpgg"]
+[gd_scene load_steps=7 format=3 uid="uid://dl6k4l1sowpgg"]
 
 [ext_resource type="Script" path="res://source/game/PlayState.gd" id="1_714lj"]
 [ext_resource type="PackedScene" uid="uid://dioxu3hkpb8ki" path="res://source/game/Character.tscn" id="2_611e2"]
 [ext_resource type="SpriteFrames" uid="uid://cb8bkgn26d5fs" path="res://assets/images/characters/dad.res" id="3_mfou7"]
 [ext_resource type="PackedScene" uid="uid://cfghwn7f5veay" path="res://source/game/Strumline.tscn" id="3_qwvqn"]
 [ext_resource type="AudioStream" uid="uid://bvwivsh2rcwsm" path="res://assets/songs/test/song/Inst.ogg" id="4_huw5l"]
+[ext_resource type="AudioStream" uid="uid://g1puto7g2ylp" path="res://assets/songs/test/song/Voices.ogg" id="6_duw1w"]
 
 [node name="PlayState" type="Node2D"]
 script = ExtResource("1_714lj")
@@ -39,4 +40,7 @@ characters = [NodePath("../../camGame/Dad")]
 [node name="Inst" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_huw5l")
 volume_db = -8.0
-autoplay = true
+
+[node name="Voices" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_duw1w")
+volume_db = -8.0
