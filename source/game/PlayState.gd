@@ -22,6 +22,12 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 
 @onready var strumLines:Array[Strumline] = [cpuStrums, playerStrums]
 
+@onready var dad = $Dad
+#@onready var gf = $GF
+@onready var bf = $Boyfriend
+
+@onready var camFollow:Vector2 = Vector2(dad.position.x + 150, dad.position.y + 100)
+
 func _ready():
 	for sL in chart.strumLines.size():
 		for nJson in chart.strumLines[sL].notes:
@@ -34,20 +40,22 @@ func _ready():
 			notes.add_child(note)
 			strumLines[sL].notes.push_back(note)
 			strumLines[sL].strums[note.noteData].notes.push_back(note)
+			
 	Conductor.bpm = 150.0
 	Conductor.pause()
 	Conductor.reset()
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	inst.play()
 	voices.play()
 	Conductor.play()
 
 func _process(_delta):
 	camGame.scale = lerp(camGame.scale, Vector2(1,1), 0.06)
-	camGame.position = lerp(camGame.position, Vector2(0,0), 0.06)
+	camGame.position = lerp(camGame.position, camFollow, 0.04)
+#	camGame.position = lerp(camGame.position, Vector2(0,0), 0.06)
 	
 	camHUD.scale = lerp(camHUD.scale, Vector2(1,1), 0.06)
-	camHUD.position = lerp(camHUD.position, Vector2(0,0), 0.06)
+#	camHUD.position = lerp(camHUD.position, Vector2(0,0), 0.06)
 
 func goodNoteHit(note):
 	var strum = note.strumLine.get_node(note.dirs[note.noteData])
@@ -69,11 +77,14 @@ func stepHit(curStep):
 
 func beatHit(curBeat):
 	if curBeat % camZoomingInterval == 0:
+		camHUD.offset.x = (camHUD.scale.x - 1.0) * -(1280 * 0.5)
+		camHUD.offset.y = (camHUD.scale.y - 1.0) * -(720 * 0.5)
+		
 		camGame.scale = Vector2(1.00625*camZoomingStrength,1.0025*camZoomingStrength)
-		camGame.position = Vector2(-3.25*camZoomingStrength,-1.5625*camZoomingStrength)
+#		camGame.position = Vector2(-3.25*camZoomingStrength,-1.5625*camZoomingStrength)
 		
 		camHUD.scale = Vector2(1.0125*camZoomingStrength,1.0125*camZoomingStrength)
-		camHUD.position = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
+#		camHUD.position = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
 	
 	for sl in strumLines:
 		for character in sl.characters:
