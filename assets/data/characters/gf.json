@@ -1,0 +1,59 @@
+{
+	"info": {
+		"flipX": false,
+		"x": 0,
+		"y": 0,
+		"holdTime": 4,
+		"idles": ["danceLeft", "danceRight"]
+	},
+
+	"anims": [
+		{
+			"name": "cheer",
+			"x": 3,
+			"y": 0
+		}, {
+			"name": "singLEFT",
+			"x": 0,
+			"y": -19
+		}, {
+			"name": "singDOWN",
+			"x": 0,
+			"y": -20
+		}, {
+			"name": "singUP",
+			"x": 0,
+			"y": 4
+		}, {
+			"name": "singRIGHT",
+			"x": 0,
+			"y": -20
+		}, {
+			"name": "sad",
+			"x": -2,
+			"y": -21
+		}, {
+			"name": "danceLeft",
+			"x": 0,
+			"y": -9
+		}, {
+			"name": "danceRight",
+			"x": 0,
+			"y": -9
+		}, {
+			"name": "hairBlow",
+			"x": 45,
+			"y": -8
+		}, {
+			"name": "hairFall",
+			"x": 0,
+			"y": -9
+		}, {
+			"name": "scared",
+			"x": -2,
+			"y": -17
+		}, 
+	]
+}
+
+

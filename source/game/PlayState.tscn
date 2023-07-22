@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl6k4l1sowpgg"]
+[gd_scene load_steps=10 format=3 uid="uid://dl6k4l1sowpgg"]
 
 [ext_resource type="Script" path="res://source/game/PlayState.gd" id="1_714lj"]
 [ext_resource type="PackedScene" uid="uid://dioxu3hkpb8ki" path="res://source/game/Character.tscn" id="2_611e2"]
@@ -6,6 +6,8 @@
 [ext_resource type="SpriteFrames" uid="uid://cb8bkgn26d5fs" path="res://assets/images/characters/dad.res" id="3_mfou7"]
 [ext_resource type="PackedScene" uid="uid://cfghwn7f5veay" path="res://source/game/Strumline.tscn" id="3_qwvqn"]
 [ext_resource type="AudioStream" uid="uid://bvwivsh2rcwsm" path="res://assets/songs/test/song/Inst.ogg" id="4_huw5l"]
+[ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="4_wprrn"]
+[ext_resource type="SpriteFrames" uid="uid://bdp20ky7y62o2" path="res://assets/images/characters/gf.res" id="5_yhitf"]
 [ext_resource type="AudioStream" uid="uid://g1puto7g2ylp" path="res://assets/songs/test/song/Voices.ogg" id="6_duw1w"]
 
 [node name="PlayState" type="Node2D"]
@@ -19,6 +21,17 @@ position_smoothing_enabled = true
 [node name="Boyfriend" parent="." instance=ExtResource("2_611e2")]
 position = Vector2(770, 450)
 centered = false
+
+[node name="ParallaxNode" type="Node2D" parent="."]
+position = Vector2(400, 130)
+script = ExtResource("4_wprrn")
+parallax_factor = Vector2(0.95, 0.95)
+
+[node name="GF" parent="ParallaxNode" instance=ExtResource("2_611e2")]
+sprite_frames = ExtResource("5_yhitf")
+animation = &"danceLeft"
+centered = false
+curCharacter = "gf"
 
 [node name="Dad" parent="." instance=ExtResource("2_611e2")]
 position = Vector2(100, 100)

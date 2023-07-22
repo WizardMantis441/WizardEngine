@@ -3,7 +3,8 @@
 		"flipX": false,
 		"x": 0,
 		"y": 0,
-		"holdTime": 4
+		"holdTime": 4,
+		"idles": ["idle"]
 	},
 
 	"anims": [
