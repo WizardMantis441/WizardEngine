@@ -76,12 +76,7 @@ func stepHit(curStep):
 
 func beatHit(curBeat):
 	if curBeat % camZoomingInterval == 0:
-		
 		camGame.zoom = Vector2(1.00625*camZoomingStrength,1.0025*camZoomingStrength)
-#		camGame.position = Vector2(-3.25*camZoomingStrength,-1.5625*camZoomingStrength)
-		
-#		camHUD.offset.x = (camHUD.scale.x - 1.0) * -(1280 * 0.5)
-#		camHUD.offset.y = (camHUD.scale.y - 1.0) * -(720 * 0.5)
 		camHUD.scale = Vector2(1.0125*camZoomingStrength,1.0125*camZoomingStrength)
 		camHUD.offset = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
 	
