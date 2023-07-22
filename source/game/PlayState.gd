@@ -50,12 +50,11 @@ func _ready():
 	Conductor.play()
 
 func _process(_delta):
-	camGame.scale = lerp(camGame.scale, Vector2(1,1), 0.06)
+	camGame.zoom = lerp(camGame.zoom, Vector2(1,1), 0.06)
 	camGame.position = lerp(camGame.position, camFollow, 0.04)
-#	camGame.position = lerp(camGame.position, Vector2(0,0), 0.06)
 	
 	camHUD.scale = lerp(camHUD.scale, Vector2(1,1), 0.06)
-#	camHUD.position = lerp(camHUD.position, Vector2(0,0), 0.06)
+	camHUD.offset = lerp(camHUD.offset, Vector2(0,0), 0.06)
 
 func goodNoteHit(note):
 	var strum = note.strumLine.get_node(note.dirs[note.noteData])
@@ -77,14 +76,14 @@ func stepHit(curStep):
 
 func beatHit(curBeat):
 	if curBeat % camZoomingInterval == 0:
-		camHUD.offset.x = (camHUD.scale.x - 1.0) * -(1280 * 0.5)
-		camHUD.offset.y = (camHUD.scale.y - 1.0) * -(720 * 0.5)
 		
-		camGame.scale = Vector2(1.00625*camZoomingStrength,1.0025*camZoomingStrength)
+		camGame.zoom = Vector2(1.00625*camZoomingStrength,1.0025*camZoomingStrength)
 #		camGame.position = Vector2(-3.25*camZoomingStrength,-1.5625*camZoomingStrength)
 		
+#		camHUD.offset.x = (camHUD.scale.x - 1.0) * -(1280 * 0.5)
+#		camHUD.offset.y = (camHUD.scale.y - 1.0) * -(720 * 0.5)
 		camHUD.scale = Vector2(1.0125*camZoomingStrength,1.0125*camZoomingStrength)
-#		camHUD.position = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
+		camHUD.offset = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
 	
 	for sl in strumLines:
 		for character in sl.characters:
