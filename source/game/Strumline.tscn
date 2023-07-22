@@ -4,21 +4,23 @@
 [ext_resource type="PackedScene" uid="uid://c3s2duytafk2a" path="res://source/game/Strum.tscn" id="1_jffmn"]
 
 [node name="Strumline" type="Node2D"]
+position = Vector2(0, -3)
 script = ExtResource("1_e47l4")
 
 [node name="left" parent="." instance=ExtResource("1_jffmn")]
+position = Vector2(-168, 0)
 
 [node name="down" parent="." instance=ExtResource("1_jffmn")]
-position = Vector2(112, 0)
+position = Vector2(-56, 0)
 animation = &"arrow static instance 1"
 noteData = 1
 
 [node name="up" parent="." instance=ExtResource("1_jffmn")]
-position = Vector2(224, 0)
+position = Vector2(56, 0)
 animation = &"arrow static instance 2"
 noteData = 2
 
 [node name="right" parent="." instance=ExtResource("1_jffmn")]
-position = Vector2(336, 0)
+position = Vector2(168, 0)
 animation = &"arrow static instance 3"
 noteData = 3

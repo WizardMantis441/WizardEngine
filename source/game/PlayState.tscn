@@ -27,11 +27,11 @@ z_index = 1
 z_as_relative = false
 
 [node name="Player Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
-position = Vector2(775, 125)
+position = Vector2(960, 125)
 characters = [NodePath("../../camGame/Boyfriend")]
 
 [node name="Opponent Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
-position = Vector2(175, 125)
+position = Vector2(320, 125)
 cpu = true
 characters = [NodePath("../../camGame/Dad")]
 
