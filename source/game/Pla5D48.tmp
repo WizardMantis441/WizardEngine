@@ -19,11 +19,11 @@ position_smoothing_enabled = true
 [node name="stage" parent="." instance=ExtResource("2_pyfa4")]
 
 [node name="ParallaxNode" type="Node2D" parent="."]
+position = Vector2(400, 130)
 script = ExtResource("4_wprrn")
 parallax_factor = Vector2(0.95, 0.95)
 
 [node name="GF" parent="ParallaxNode" instance=ExtResource("2_611e2")]
-position = Vector2(400, 130)
 sprite_frames = ExtResource("5_yhitf")
 animation = &"danceLeft"
 centered = false
@@ -38,6 +38,7 @@ curCharacter = "dad"
 [node name="Boyfriend" parent="." instance=ExtResource("2_611e2")]
 position = Vector2(770, 450)
 centered = false
+curCharacter = null
 
 [node name="Inst" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_huw5l")
@@ -49,14 +50,12 @@ volume_db = -8.0
 
 [node name="camHUD" type="CanvasLayer" parent="."]
 
-[node name="Player Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
+[node name="Player Strums" parent="camHUD" instance=ExtResource("3_qwvqn")]
 position = Vector2(960, 125)
-characters = [NodePath("../../Boyfriend")]
 
-[node name="Opponent Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
+[node name="Opponent Strums" parent="camHUD" instance=ExtResource("3_qwvqn")]
 position = Vector2(320, 125)
 cpu = true
-characters = [NodePath("../../Dad")]
 
 [node name="Notes" type="Node2D" parent="camHUD"]
 

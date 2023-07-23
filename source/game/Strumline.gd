@@ -1,7 +1,7 @@
 class_name Strumline
 extends Node2D
 
-@export var cpu:bool = false;
+@export var cpu:bool = false
 @export var characters:Array[Character] = []
 
 @onready var left = $left

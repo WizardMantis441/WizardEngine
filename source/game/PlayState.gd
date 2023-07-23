@@ -16,14 +16,15 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 
 @onready var cpuStrums = $"camHUD/Opponent Strums"
 @onready var playerStrums = $"camHUD/Player Strums"
+@onready var additionalStrums = $"camHUD/Additional Strums"
 
 @onready var inst = $Inst
 @onready var voices = $Voices
 
-@onready var strumLines:Array[Strumline] = [cpuStrums, playerStrums]
+@onready var strumLines:Array[Strumline] = [cpuStrums, playerStrums, additionalStrums]
 
 @onready var dad = $Dad
-#@onready var gf = $GF
+@onready var gf = $ParallaxNode/GF
 @onready var bf = $Boyfriend
 
 @onready var camFollow:Vector2 = Vector2(dad.position.x + 150, dad.position.y + 100)
