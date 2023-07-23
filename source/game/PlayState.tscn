@@ -61,6 +61,7 @@ characters = [NodePath("../../Dad")]
 [node name="Notes" type="Node2D" parent="camHUD"]
 
 [node name="Additional Strums" parent="camHUD" node_paths=PackedStringArray("characters") instance=ExtResource("3_qwvqn")]
-position = Vector2(1920, 250)
+visible = false
+position = Vector2(0, 0)
 cpu = true
 characters = [NodePath("../../ParallaxNode/GF")]
