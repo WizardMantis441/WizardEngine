@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bwhsuvdq5edpw"]
+[gd_scene load_steps=10 format=3 uid="uid://bwhsuvdq5edpw"]
 
 [ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="1_x2514"]
 [ext_resource type="Texture2D" uid="uid://im65fthe3ecx" path="res://assets/images/stages/philly/sky.png" id="2_agrif"]
@@ -6,116 +6,81 @@
 [ext_resource type="Texture2D" uid="uid://bf0r8njgp0bsn" path="res://assets/images/stages/philly/win.png" id="4_gvcbm"]
 [ext_resource type="Texture2D" uid="uid://dijc3wyno6fju" path="res://assets/images/stages/philly/behindTrain.png" id="5_7hgyg"]
 [ext_resource type="Texture2D" uid="uid://cvgppw4kvatwv" path="res://assets/images/stages/philly/train.png" id="6_81lcb"]
+[ext_resource type="AudioStream" uid="uid://bkltnr4tkcvn7" path="res://assets/audio/sfx/train_passes.ogg" id="7_uwvx4"]
 [ext_resource type="Texture2D" uid="uid://c5hls1381jcs7" path="res://assets/images/stages/philly/street.png" id="7_x3qcw"]
 
 [sub_resource type="GDScript" id="GDScript_8icjw"]
 script/source = "extends Node2D
 
-# trainSound = new FlxSound().loadEmbedded(Paths.sound('train_passes'));
-# FlxG.sound.list.add(trainSound);
+@onready var lights = $\"scroll 0_3/Lights\"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@onready var train = $\"Philly Train\"
+@onready var trainSound = $\"Train Passes\"
 
+var trainMoving:bool = false;
+var trainFrameTiming:float = 0;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-#	if (trainMoving)
-#	{
-#		trainFrameTiming += elapsed;
-#
-#		if (trainFrameTiming >= 1 / 24)
-#		{
-#			updateTrainPos();
-#			trainFrameTiming = 0;
-#		}
-#	}
-#
-#	lightFadeShader.update((Conductor.crochet / 1000) * FlxG.elapsed * 1.5);
-	pass
-\"\"\"
-var trainMoving:Bool = false;
-var trainFrameTiming:Float = 0;
+var trainCars:int = 8;
+var trainFinishing:bool = false;
+var trainCooldown:int = 0;
 
-var trainCars:Int = 8;
-var trainFinishing:Bool = false;
-var trainCooldown:Int = 0;
+func _process(_delta):
+	if trainMoving:
+		trainFrameTiming += _delta
+		if trainFrameTiming >= (1 / 24):
+			updateTrainPos()
+			trainFrameTiming = 0
+	# lightFadeShader.update((Conductor.crochet / 1000) * FlxG.elapsed * 1.5);
 
-function trainStart():Void
-{
-	trainMoving = true;
-	trainSound.play(true);
-}
+func trainStart():
+	trainMoving = true
+	trainSound.play()
 
-var startedMoving:Bool = false;
+var startedMoving:bool = false;
+func updateTrainPos():
+	if trainSound.get_playback_position() * 1000 >= 4700:
+		startedMoving = true
+		get_tree().current_scene.GF.playAnim('hairBlow')
+	if startedMoving:
+		train.x -= 400
+		if train.x < -200 and not trainFinishing:
+			train.x = -1150
+			trainCars -= 1
+			if trainCars <= 0:
+				trainFinishing = true
+		if train.x < -4000 and trainFinishing:
+			trainReset()
 
-function updateTrainPos():Void
-{
-	if (trainSound.time >= 4700)
-	{
-		startedMoving = true;
-		gf.playAnim('hairBlow');
-	}
-
-	if (startedMoving)
-	{
-		phillyTrain.x -= 400;
-
-		if (phillyTrain.x < -2000 && !trainFinishing)
-		{
-			phillyTrain.x = -1150;
-			trainCars -= 1;
-
-			if (trainCars <= 0)
-				trainFinishing = true;
-		}
-
-		if (phillyTrain.x < -4000 && trainFinishing)
-			trainReset();
-	}
-}
-
-function trainReset():Void
-{
-	gf.playAnim('hairFall');
-	phillyTrain.x = FlxG.width + 200;
-	trainMoving = false;
-	// trainSound.stop();
-	// trainSound.time = 0;
-	trainCars = 8;
-	trainFinishing = false;
-	startedMoving = false;
-}
-\"\"\"
+func trainReset():
+	get_tree().current_scene.GF.playAnim('hairfall')
+	train.x = 1280 + 200
+	trainMoving = false
+	trainCars = 8
+	trainFinishing = false
+	startedMoving = false
 
 func beatHit():
+	if not trainMoving:
+		trainCooldown += 1
+		
+	if Conductor.curBeat % 8 == 4 and randf_range(0, 1) >= 0.3 and not trainMoving and trainCooldown > 8:
+		trainCooldown = randi_range(-4, 0)
+		trainStart()
+
+func measureHit():
 	\"\"\"
-	if (!trainMoving)
-		trainCooldown += 1;
+	lightFadeShader.reset();
 
-	if (curBeat % 4 == 0)
+	phillyCityLights.forEach(function(light:FlxSprite)
 	{
-		lightFadeShader.reset();
+		light.visible = false;
+	});
 
-		phillyCityLights.forEach(function(light:FlxSprite)
-		{
-			light.visible = false;
-		});
+	curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
-		curLight = FlxG.random.int(0, phillyCityLights.length - 1);
-
-		phillyCityLights.members[curLight].visible = true;
-		// phillyCityLights.members[curLight].alpha = 1;
-	}
-
-	if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-	{
-		trainCooldown = FlxG.random.int(-4, 0);
-		trainStart();
-	}
-\"\"\"
-	pass
+	phillyCityLights.members[curLight].visible = true;
+	// phillyCityLights.members[curLight].alpha = 1;
+	\"\"\"
 "
 
 [node name="philly" type="Node2D"]
@@ -141,41 +106,7 @@ scale = Vector2(0.85, 0.85)
 texture = ExtResource("3_otgl0")
 centered = false
 
-[node name="Philly City Lights" type="Node2D" parent="scroll 0_3"]
-position = Vector2(10, 0)
-
-[node name="Win0" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_gvcbm")
-centered = false
-
-[node name="Win1" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_gvcbm")
-centered = false
-
-[node name="Win2" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_gvcbm")
-centered = false
-
-[node name="Win3" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_gvcbm")
-centered = false
-
-[node name="Win4" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_gvcbm")
-centered = false
-
-[node name="Win5" type="Sprite2D" parent="scroll 0_3/Philly City Lights"]
-position = Vector2(-10, 0)
+[node name="Lights" type="Sprite2D" parent="scroll 0_3"]
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_gvcbm")
 centered = false
@@ -189,6 +120,9 @@ centered = false
 position = Vector2(2000, 360)
 texture = ExtResource("6_81lcb")
 centered = false
+
+[node name="Train Passes" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_uwvx4")
 
 [node name="Street" type="Sprite2D" parent="."]
 position = Vector2(-40, 50)
