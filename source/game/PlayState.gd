@@ -13,6 +13,7 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 
 @onready var camFollow:Vector2 = Vector2(600, 600)
 
+@onready var curStage = "stage"
 @onready var stage = $Stage
 
 @onready var dad = $Dad
@@ -31,15 +32,15 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 @onready var voices = $Voices
 
 func _ready():
-	var curStage = ("stage" if chart.stage == null else chart.stage)
-	var stageScene:PackedScene = load("res://assets/data/stages/" + curStage + ".tscn")
-	var newStage = stageScene.instantiate()
+	if ResourceLoader.exists("res://assets/data/stages/" + chart.stage + ".tscn"):
+		curStage = chart.stage
+				
+	var newStage = load("res://assets/data/stages/" + curStage + ".tscn").instantiate()
 	stage.add_child(newStage)
 	
 	for sL in chart.strumLines.size():
 		for nJson in chart.strumLines[sL].notes:
 			var n = JSON.parse_string(str(nJson))
-#			var newNote = Note.new(strumLines[sL], note.id, note.time)
 			var note:Note = noteScene.instantiate()
 			note.strumLine = strumLines[sL]
 			note.noteData = n.id
