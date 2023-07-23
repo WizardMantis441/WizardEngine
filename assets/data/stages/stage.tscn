@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://csrao70f2dqmx"]
+[gd_scene load_steps=6 format=3 uid="uid://csrao70f2dqmx"]
 
 [ext_resource type="Texture2D" uid="uid://bg0glsqp1jsgt" path="res://assets/images/stages/stage/stageback.png" id="1_2s7vm"]
 [ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="1_gpe6u"]
+[ext_resource type="Script" path="res://source/game/Stage.gd" id="1_xxj6t"]
 [ext_resource type="Texture2D" uid="uid://cpaaedgafifrw" path="res://assets/images/stages/stage/stagefront.png" id="2_ytmas"]
 [ext_resource type="Texture2D" uid="uid://bpa2w3rsokd33" path="res://assets/images/stages/stage/stagecurtains.png" id="3_jfwkv"]
 
 [node name="stage" type="Node2D"]
+script = ExtResource("1_xxj6t")
 
 [node name="scroll 0_9" type="Node2D" parent="."]
 script = ExtResource("1_gpe6u")
