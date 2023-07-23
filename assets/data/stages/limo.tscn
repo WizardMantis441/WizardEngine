@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://23mhheqiwlmc"]
+
+[ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="1_1vh0a"]
+[ext_resource type="Texture2D" uid="uid://c0txq7sqnx5i2" path="res://assets/images/stages/limo/limoSunset.png" id="2_df4wa"]
+[ext_resource type="SpriteFrames" path="res://assets/images/stages/limo/bgLimo.res" id="3_6m7is"]
+[ext_resource type="SpriteFrames" path="res://assets/images/stages/limo/limoDancer.res" id="4_0k2fb"]
+[ext_resource type="Texture2D" uid="uid://cv36evjbr2n3r" path="res://assets/images/stages/limo/limoOverlay.png" id="5_nnmbf"]
+[ext_resource type="SpriteFrames" uid="uid://camiq81sqvj0j" path="res://assets/images/stages/limo/limoDrive.res" id="6_ad5hn"]
+[ext_resource type="Texture2D" uid="uid://ddr5sgjegafth" path="res://assets/images/stages/limo/fastCarLol.png" id="7_m4pbi"]
+
+[node name="limo" type="Node2D"]
+
+[node name="scroll 0_1" type="Node2D" parent="."]
+script = ExtResource("1_1vh0a")
+parallax_factor = Vector2(0.1, 0.1)
+
+[node name="skyBG" type="Sprite2D" parent="scroll 0_1"]
+position = Vector2(-170, 350)
+texture = ExtResource("2_df4wa")
+centered = false
+
+[node name="scroll 0_4" type="Node2D" parent="."]
+script = ExtResource("1_1vh0a")
+
+[node name="bgLimo" type="AnimatedSprite2D" parent="scroll 0_4"]
+position = Vector2(-200, 480)
+sprite_frames = ExtResource("3_6m7is")
+animation = &"background limo pink"
+centered = false
+
+[node name="Limo Dancers" type="Node2D" parent="scroll 0_4"]
+
+[node name="Background Dancer 1" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(130, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="Background Dancer 2" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(500, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="Background Dancer 3" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(870, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="Background Dancer 4" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(1240, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="Background Dancer 5" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(1610, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="Background Dancer 6" type="AnimatedSprite2D" parent="scroll 0_4/Limo Dancers"]
+position = Vector2(1980, 80)
+sprite_frames = ExtResource("4_0k2fb")
+animation = &"bg dancer sketch PINK"
+centered = false
+
+[node name="POST" type="Node2D" parent="."]
+
+[node name="overlayShit" type="Sprite2D" parent="POST"]
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(-500, -600)
+texture = ExtResource("5_nnmbf")
+centered = false
+
+[node name="limo" type="AnimatedSprite2D" parent="POST"]
+position = Vector2(-120, 550)
+sprite_frames = ExtResource("6_ad5hn")
+animation = &"Limo stage"
+frame = 3
+frame_progress = 1.0
+centered = false
+
+[node name="fastCar" type="Sprite2D" parent="POST"]
+position = Vector2(-300, 160)
+texture = ExtResource("7_m4pbi")
+centered = false
