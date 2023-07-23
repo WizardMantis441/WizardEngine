@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl6k4l1sowpgg"]
+[gd_scene load_steps=9 format=3 uid="uid://dl6k4l1sowpgg"]
 
 [ext_resource type="Script" path="res://source/game/PlayState.gd" id="1_714lj"]
 [ext_resource type="PackedScene" uid="uid://dioxu3hkpb8ki" path="res://source/game/Character.tscn" id="2_611e2"]
-[ext_resource type="PackedScene" uid="uid://csrao70f2dqmx" path="res://assets/data/stages/stage.tscn" id="2_pyfa4"]
 [ext_resource type="SpriteFrames" uid="uid://cb8bkgn26d5fs" path="res://assets/images/characters/dad.res" id="3_mfou7"]
 [ext_resource type="PackedScene" uid="uid://cfghwn7f5veay" path="res://source/game/Strumline.tscn" id="3_qwvqn"]
 [ext_resource type="AudioStream" uid="uid://bvwivsh2rcwsm" path="res://assets/songs/test/song/Inst.ogg" id="4_huw5l"]
@@ -16,7 +15,7 @@ script = ExtResource("1_714lj")
 [node name="camGame" type="Camera2D" parent="."]
 position_smoothing_enabled = true
 
-[node name="stage" parent="." instance=ExtResource("2_pyfa4")]
+[node name="Stage" type="Node2D" parent="."]
 
 [node name="ParallaxNode" type="Node2D" parent="."]
 script = ExtResource("4_wprrn")

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvdgf1defeksa"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/stages/spooky/halloween_bg.res" id="1_2pxry"]
+
+[node name="spooky" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-200, -100)
+sprite_frames = ExtResource("1_2pxry")
+animation = &"idle"
+centered = false

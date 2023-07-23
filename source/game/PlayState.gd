@@ -5,31 +5,37 @@ extends Node2D
 
 var chart:Dictionary = Chart.parse('test', 'normal');
 
-@onready var noteScene:PackedScene = load("res://source/game/Note.tscn")
-@onready var notes = $camHUD/Notes
-
 @export var camZoomingStrength:int = 1
 @export var camZoomingInterval:int = 4
 
 @onready var camGame = $camGame
 @onready var camHUD = $camHUD
 
-@onready var cpuStrums = $"camHUD/Opponent Strums"
-@onready var playerStrums = $"camHUD/Player Strums"
-@onready var additionalStrums = $"camHUD/Additional Strums"
+@onready var camFollow:Vector2 = Vector2(600, 600)
 
-@onready var inst = $Inst
-@onready var voices = $Voices
-
-@onready var strumLines:Array[Strumline] = [cpuStrums, playerStrums, additionalStrums]
+@onready var stage = $Stage
 
 @onready var dad = $Dad
 @onready var gf = $ParallaxNode/GF
 @onready var bf = $Boyfriend
 
-@onready var camFollow:Vector2 = Vector2(dad.position.x + 150, dad.position.y + 100)
+@onready var cpuStrums = $"camHUD/Opponent Strums"
+@onready var playerStrums = $"camHUD/Player Strums"
+@onready var additionalStrums = $"camHUD/Additional Strums"
+@onready var strumLines:Array[Strumline] = [cpuStrums, playerStrums, additionalStrums]
+
+@onready var noteScene:PackedScene = load("res://source/game/Note.tscn")
+@onready var notes = $camHUD/Notes
+
+@onready var inst = $Inst
+@onready var voices = $Voices
 
 func _ready():
+	var curStage = ("stage" if chart.stage == null else chart.stage)
+	var stageScene:PackedScene = load("res://assets/data/stages/" + curStage + ".tscn")
+	var newStage = stageScene.instantiate()
+	stage.add_child(newStage)
+	
 	for sL in chart.strumLines.size():
 		for nJson in chart.strumLines[sL].notes:
 			var n = JSON.parse_string(str(nJson))
