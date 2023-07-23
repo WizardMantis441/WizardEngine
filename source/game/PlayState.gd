@@ -3,8 +3,8 @@ extends Node2D
 
 #var chart:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/test/charts/normal.json", FileAccess.READ).get_as_text())
 
-var curSong:String = 'test'
-var chart:Dictionary = Chart.parse(curSong, 'normal');
+var curSong:String = 'bopeebo'
+var chart:Dictionary = Chart.parse(curSong, 'hard');
 var meta:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/" + curSong + "/meta.json", FileAccess.READ).get_as_text())
 
 @export var camZoomingStrength:int = 1
@@ -19,7 +19,7 @@ var meta:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/" + 
 @onready var stage = $Stage
 
 @onready var dad = $Dad
-@onready var gf = $ParallaxNode/GF
+@onready var gf = $GF
 @onready var bf = $Boyfriend
 
 @onready var cpuStrums = $"camHUD/Opponent Strums"
@@ -104,32 +104,8 @@ func goodNoteHit(note):
 		character.playAnim('sing' + note.dirs[note.noteData].to_upper(), true, 'SING');
 		character.timer = 0;
 
-func stepHit(curStep):
-	for sl in strumLines:
-		for character in sl.characters:
-			if character.has_method("stepHit"):
-				character.call_deferred("stepHit", curStep)
-
 func beatHit(curBeat):
 	if curBeat % camZoomingInterval == 0:
 		camGame.zoom = Vector2(1.00625*camZoomingStrength,1.0025*camZoomingStrength)
 		camHUD.scale = Vector2(1.0125*camZoomingStrength,1.0125*camZoomingStrength)
 		camHUD.offset = Vector2(-6.25*camZoomingStrength,-3.125*camZoomingStrength)
-	
-	for sl in strumLines:
-		for character in sl.characters:
-			character.dance()
-			if character.has_method("beatHit"):
-				character.call_deferred("beatHit", curBeat)
-
-func measureHit(curMeasure):
-	for sl in strumLines:
-		for character in sl.characters:
-			if character.has_method("measureHit"):
-				character.call_deferred("measureHit", curMeasure)
-
-func onBPMChange(newBPM):
-	for sl in strumLines:
-		for character in sl.characters:
-			if character.has_method("onBPMChange"):
-				character.call_deferred("onBPMChange", newBPM)

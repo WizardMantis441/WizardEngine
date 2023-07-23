@@ -52,16 +52,25 @@ func _process(elapsed:float) -> void:
 	
 	if oldStep != curStep:
 		stepHit.emit(curStep);
-		if curScene.has_method("stepHit"):
-			curScene.call_deferred("stepHit", curStep)
+		for i in get_tree().current_scene.get_children():
+			if i.has_method("stepHit"):
+				i.call_deferred("stepHit", curStep)
+			if curScene.has_method("stepHit"):
+				curScene.call_deferred("stepHit", curStep)
 			
 		if curStep % 4 == 0:
 			beatHit.emit(curBeat);
+			for i in get_tree().current_scene.get_children():
+				if i.has_method("beatHit"):
+					i.call_deferred("beatHit", curBeat)
 			if curScene.has_method("beatHit"):
 				curScene.call_deferred("beatHit", curBeat)
 				
 		if curBeat % 4 == 0:
 			measureHit.emit(curMeasure);
+			for i in get_tree().current_scene.get_children():
+				if i.has_method("measureHit"):
+					i.call_deferred("measureHit", curMeasure)
 			if curScene.has_method("measureHit"):
 				curScene.call_deferred("measureHit", curMeasure)
 

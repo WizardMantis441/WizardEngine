@@ -13,6 +13,7 @@ func _ready():
 	for note in notes:
 		if note.noteData != self.noteData:
 			notes.erase(note)
+	notes.sort_custom(func(a, b): return a > b)
 
 func _process(_delta):
 	self.cpu = get_parent().cpu
@@ -21,10 +22,14 @@ func _process(_delta):
 		self.play("arrow static instance " + str(noteData))
 
 func updateNote(note):
+	note.canBeHit = (note.time > Conductor.songPosition - (Conductor.hitWindow * Conductor.latePressWindow) and note.time < Conductor.songPosition + (Conductor.hitWindow * Conductor.earlyPressWindow))
 	note.tooLate = (note.time < Conductor.songPosition - Conductor.hitWindow) and not note.wasGoodHit
 
-	if abs(Conductor.songPosition - note.time) < Conductor.hitWindow * 0.35 and self.notes.find(note) == 0:
-		note.canBeHit = true
+#	if abs(Conductor.songPosition - note.time) < Conductor.hitWindow * 0.35 and self.notes.find(note) == 0:
+#		note.canBeHit = true
+#		self.closestNote = note
+	
+	if note.canBeHit:
 		self.closestNote = note
 	
 	if note.tooLate:
@@ -34,18 +39,6 @@ func updateNote(note):
 		note.strumLine.notes.erase(note)
 		if get_tree().current_scene.get_children().has(note):
 			get_tree().current_scene.remove_child(note)
-	
-#	if self.closestNote != null and Input.is_action_just_pressed(self.closestNote.dirs[self.closestNote.noteData]) and not self.closestNote.wasGoodHit:
-#		get_tree().current_scene.goodNoteHit(self.closestNote)
-#		self.closestNote = null
-#		self.play(types[self.noteData] + " confirm instance 1")
-#	elif Input.is_action_just_pressed(types[self.noteData]):
-#		self.play(types[self.noteData] + " press instance 1")
-#	elif Input.is_action_just_released(types[self.noteData]):
-#		self.play("arrow static instance " + str(self.noteData))
-#
-#	if self.animation.contains('confirm') and not Input.is_action_pressed(types[self.noteData]):
-#		self.play("arrow static instance " + str(self.noteData))
 
 func _input(event):
 	if cpu or not event.is_action(types[self.noteData]):

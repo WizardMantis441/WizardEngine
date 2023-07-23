@@ -38,9 +38,12 @@ func playAnim(animname:String, force:bool = false, context:String = 'NONE'):
 		self.frame = 0
 		self.play(animname)
 
-func dance():
+func dance(curBeat):
 	if (self.lastAnimContext == 'SING' or self.lastAnimContext == 'NONE' or self.lastAnimContext == 'DANCE') and self.timer >= self.holdTime:
-		self.playAnim(idles[Conductor.curBeat % idles.size()])
+		self.playAnim(idles[curBeat % idles.size()])
 
 func stepHit(_curStep):
 	self.timer += 1;
+
+func beatHit(curBeat):
+	self.dance(curBeat)
