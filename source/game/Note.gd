@@ -13,7 +13,7 @@ static var dirs = ["left", "down", "up", "right"]
 func _ready():
 	self.play(["purple", "blue", "green", "red"][noteData] + " instance 1")
 
-func _process(delta):
+func _process(_delta):
 	var strum = self.strumLine.get_node(dirs[self.noteData])
 	self.z_index = strum.z_index + 1
 	self.position.x = strum.position.x + strumLine.position.x

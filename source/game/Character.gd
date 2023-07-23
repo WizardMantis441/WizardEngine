@@ -19,9 +19,7 @@ func _ready():
 	json = JSON.parse_string(FileAccess.open("res://assets/data/characters/" + curCharacter + ".json", FileAccess.READ).get_as_text())
 	holdTime = json.info.holdTime;
 	globalOffset = Vector2(json.info.x, json.info.y)
-	for i in json.info.idles:
-		idles.push_back(i);
-		print(idles)
+	idles = json.info.idles
 	
 	if self.json.info.flipX:
 		self.flip_h = not self.flip_h

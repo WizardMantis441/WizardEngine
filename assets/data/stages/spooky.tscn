@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bvdgf1defeksa"]
 
-[ext_resource type="SpriteFrames" path="res://assets/images/stages/spooky/halloween_bg.res" id="1_2pxry"]
+[ext_resource type="SpriteFrames" uid="uid://ehwfw0y4eiia" path="res://assets/images/stages/spooky/halloween_bg.res" id="1_2pxry"]
 
 [node name="spooky" type="Node2D"]
 

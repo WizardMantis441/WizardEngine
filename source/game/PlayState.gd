@@ -3,7 +3,9 @@ extends Node2D
 
 #var chart:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/test/charts/normal.json", FileAccess.READ).get_as_text())
 
-var chart:Dictionary = Chart.parse('test', 'normal');
+var curSong:String = 'test'
+var chart:Dictionary = Chart.parse(curSong, 'normal');
+var meta:Dictionary = JSON.parse_string(FileAccess.open("res://assets/songs/" + curSong + "/meta.json", FileAccess.READ).get_as_text())
 
 @export var camZoomingStrength:int = 1
 @export var camZoomingInterval:int = 4
@@ -11,7 +13,7 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 @onready var camGame = $camGame
 @onready var camHUD = $camHUD
 
-@onready var camFollow:Vector2 = Vector2(600, 600)
+@onready var camFollow = $camFollow
 
 @onready var curStage = "stage"
 @onready var stage = $Stage
@@ -28,13 +30,23 @@ var chart:Dictionary = Chart.parse('test', 'normal');
 @onready var noteScene:PackedScene = load("res://source/game/Note.tscn")
 @onready var notes = $camHUD/Notes
 
+@onready var events:Array = []
+
 @onready var inst = $Inst
 @onready var voices = $Voices
 
 func _ready():
 	if ResourceLoader.exists("res://assets/data/stages/" + chart.stage + ".tscn"):
 		curStage = chart.stage
-				
+	
+	if ResourceLoader.exists("res://assets/songs/" + curSong + "/song/Inst.ogg"):
+		inst.stream = load("res://assets/songs/" + curSong + "/song/Inst.ogg")
+	
+	if ResourceLoader.exists("res://assets/songs/" + curSong + "/song/Voices.ogg"):
+		voices.stream = load("res://assets/songs/" + curSong + "/song/Voices.ogg")
+	else:
+		voices.volume_db = 0
+	
 	var newStage = load("res://assets/data/stages/" + curStage + ".tscn").instantiate()
 	stage.add_child(newStage)
 	
@@ -47,9 +59,10 @@ func _ready():
 			note.time = n.time
 			notes.add_child(note)
 			strumLines[sL].notes.push_back(note)
-			strumLines[sL].strums[note.noteData].notes.push_back(note)
-			
-	Conductor.bpm = 150.0
+	
+	events = chart.events
+	
+	Conductor.bpm = meta.bpm
 	Conductor.pause()
 	Conductor.reset()
 	await get_tree().create_timer(1.0).timeout
@@ -57,19 +70,34 @@ func _ready():
 	voices.play()
 	Conductor.play()
 
+func executeEvent(event):
+	match event.name:
+		"Camera Movement":
+			if event.params[0] == 0:
+				camFollow.position = Vector2(495, 303)
+			elif event.params[0] == 1:
+				camFollow.position = Vector2(830, 590)
+		"Change BPM":
+			Conductor.bpm = event.params[0]
+	pass
+
 func _process(_delta):
+	for event in events:
+		if event.time - Conductor.songPosition <= 0:
+			events.erase(event)
+			executeEvent(event)
+	
 	camGame.zoom = lerp(camGame.zoom, Vector2(1,1), 0.06)
-	camGame.position = lerp(camGame.position, camFollow, 0.04)
+	camGame.position = lerp(camGame.position, camFollow.position, 0.06)
 	
 	camHUD.scale = lerp(camHUD.scale, Vector2(1,1), 0.06)
 	camHUD.offset = lerp(camHUD.offset, Vector2(0,0), 0.06)
 
 func goodNoteHit(note):
-	var strum = note.strumLine.get_node(note.dirs[note.noteData])
-	strum.play(note.dirs[note.noteData] + " confirm instance 1")
 	note.queue_free()
 	note.strumLine.notes.erase(note)
-	remove_child(note)
+	if get_tree().current_scene.get_children().has(note):
+		remove_child(note)
 	note.wasGoodHit = true
 	
 	for character in note.strumLine.characters:
