@@ -87,11 +87,11 @@ func _process(_delta):
 			events.erase(event)
 			executeEvent(event)
 	
-	camGame.zoom = lerp(camGame.zoom, Vector2(1,1), 0.06)
-	camGame.position = lerp(camGame.position, camFollow.position, 0.06)
+	camGame.zoom = lerp(camGame.zoom, Vector2(1,1), 0.04 * _delta * 60)
+	camGame.position = lerp(camGame.position, camFollow.position, 0.04 * _delta * 60)
 	
-	camHUD.scale = lerp(camHUD.scale, Vector2(1,1), 0.06)
-	camHUD.offset = lerp(camHUD.offset, Vector2(0,0), 0.06)
+	camHUD.scale = lerp(camHUD.scale, Vector2(1,1), 0.04 * _delta * 60)
+	camHUD.offset = lerp(camHUD.offset, Vector2(0,0), 0.04 * _delta * 60)
 
 func goodNoteHit(note):
 	note.queue_free()
