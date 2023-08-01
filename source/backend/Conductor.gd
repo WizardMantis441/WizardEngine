@@ -1,5 +1,6 @@
 extends Node
 
+var bpmChangeMap:Array = []
 var bpm:float = 100:
 	get:
 		return bpm
@@ -8,11 +9,10 @@ var bpm:float = 100:
 		bpm = value
 		crochet = ((60 / bpm) * 1000)
 		stepCrochet = crochet / 4
-var crochet:float = ((60 / bpm) * 1000); # beats in ms
-var stepCrochet:float = crochet / 4; # steps in ms
-var songPosition:float;
-
-var bpmChangeMap:Array = [];
+		
+var crochet:float = ((60 / bpm) * 1000) # beats in ms
+var stepCrochet:float = crochet / 4 # steps in ms
+var songPosition:float
 
 var curStep:int = 0;
 var curBeat:int = 0;
@@ -28,11 +28,13 @@ signal beatHit(curBeat:int);
 signal measureHit(curMeasure:int);
 signal onBPMChange(newBPM:float);
 
+var paused:bool = false
+
 func _process(elapsed:float) -> void:
 	if not paused:
-		songPosition += elapsed * 1000;
+		songPosition += elapsed * 1000
 		
-	var oldStep:int = curStep;
+	var oldStep:int = curStep
 	
 	var lastChange:Dictionary = {
 		"stepTime": 0,
@@ -74,8 +76,6 @@ func _process(elapsed:float) -> void:
 			if curScene.has_method("measureHit"):
 				curScene.call_deferred("measureHit", curMeasure)
 
-var paused:bool = false;
-
-func play() -> void: paused = false;
-func pause() -> void: paused = true;
-func reset() -> void: songPosition = 0;
+func play() -> void: paused = false
+func pause() -> void: paused = true
+func reset() -> void: songPosition = 0
